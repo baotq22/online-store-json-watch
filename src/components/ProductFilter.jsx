@@ -25,6 +25,11 @@ export const FILTER_PRICE_OPTIONS = [
 ];
 
 function ProductFilter({ resetFilter }) {
+  const handleReset = (event) => {
+    event.preventDefault(); // Prevents page refresh
+    resetFilter(); // Calls the reset function to clear all filters
+  };
+
   return (
     <Stack spacing={3} sx={{ p: 3, width: 250 }}>
       <Stack spacing={1}>
@@ -66,7 +71,7 @@ function ProductFilter({ resetFilter }) {
           type="submit"
           color="inherit"
           variant="outlined"
-          onClick={resetFilter}
+          onClick={handleReset} // Use the new handleReset function
           startIcon={<ClearAllIcon />}
         >
           Clear All

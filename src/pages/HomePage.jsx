@@ -20,7 +20,7 @@ function HomePage() {
     category: "All",
     priceRange: "",
     sortBy: "featured",
-    searchQuery: ""
+    searchQuery: "",
   };
   const methods = useForm({
     defaultValues,
@@ -84,7 +84,7 @@ function HomePage() {
 }
 
 function applyFilter(products, filters) {
-  const { sortBy } = filters;
+  const { sortBy = "featured", gender = [], category = "All", priceRange = "", searchQuery = "" } = filters;
   let filteredProducts = products;
 
   // SORT BY
@@ -102,30 +102,30 @@ function applyFilter(products, filters) {
   }
 
   // FILTER PRODUCTS
-  if (filters.gender.length > 0) {
+  if (gender.length > 0) {
     filteredProducts = products.filter((product) =>
-      filters.gender.includes(product.gender)
+      gender.includes(product.gender)
     );
   }
-  if (filters.category !== "All") {
+  if (category !== "All") {
     filteredProducts = products.filter(
-      (product) => product.category === filters.category
+      (product) => product.category === category
     );
   }
-  if (filters.priceRange) {
+  if (priceRange) {
     filteredProducts = products.filter((product) => {
-      if (filters.priceRange === "below") {
+      if (priceRange === "below") {
         return product.price < 25;
       }
-      if (filters.priceRange === "between") {
+      if (priceRange === "between") {
         return product.price >= 25 && product.price <= 75;
       }
       return product.price > 75;
     });
   }
-  if (filters.searchQuery) {
+  if (searchQuery) {
     filteredProducts = products.filter((product) =>
-      product.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
   return filteredProducts;
